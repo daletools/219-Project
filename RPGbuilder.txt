@@ -1,0 +1,9 @@
+Site that generates combat encounters or NPCs for Pathfinder
+
+Contains a list of stats, etc to generate an appropriate result based
+	on provided parameters
+
+eg "generate a Moderate combat encounter for 4 level 3 players"
+
+or "generate an NPC for me to use, with background, class, profession,
+	personality procedurally put together"

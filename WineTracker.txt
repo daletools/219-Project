@@ -1,0 +1,9 @@
+Inventory management system for winery production
+
+Record	-intake of raw product (grapes, supplies)
+	-operations that consume or transform those (pressing, bottling)
+	-physical location of wine within given tank structure
+		like Tank1=400L 'riesling', Tank2=2475L 'white blend,
+		 Tank3=empty
+
+Would need a database connection but I think its doable (and would look good for the "extra stuff" category)

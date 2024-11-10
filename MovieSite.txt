@@ -1,0 +1,13 @@
+Use the free TMDB API to make a "movie night" website
+
+Search/filter page
+
+Movie Watchlist
+
+Random picker
+
+User story is
+something like, "we have access to Tubi, Prime, and DisneyPlus,
+		show me all the horror movies from those, let me add 
+		a few picks to a list, then randomize the order or 
+		randomly pick one for me to watch"
