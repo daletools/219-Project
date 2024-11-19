@@ -1,2 +1,12 @@
-*.env
+# Node.js
+node_modules/
+npm-debug.log
+
+# dotenv environment variables file
+.env
+
+# Other sensitive files or system files
+.DS_Store
+*.log
+.vscode/
 .idea/
