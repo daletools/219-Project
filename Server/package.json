@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
+    "expres": "^0.0.5",
     "express": "^4.21.1",
     "moviedb-promise": "^4.0.7"
   }
