@@ -4,6 +4,7 @@
     "dotenv": "^16.4.7",
     "expres": "^0.0.5",
     "express": "^4.21.1",
-    "moviedb-promise": "^4.0.7"
+    "moviedb-promise": "^4.0.7",
+    "path": "^0.12.7"
   }
 }
