@@ -1,8 +1,9 @@
 const express = require('express');
-const dotenv = require('dotenv');
+const dotenv = require('dotenv');                      // Keeping our API key safe
 const path = require('path');
-const MovieDb = require('moviedb-promise').MovieDb;
-const cors = require('cors'); // Import the cors package
+const MovieDb = require('moviedb-promise').MovieDb;         //A MovieDB library
+const cors = require('cors');   // CORS so we can run the server and site locally
+const mysql = require('mysql2/promise');               // MYSQL
 
 // Load environment variables from .env file
 dotenv.config();
@@ -20,15 +21,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Serve index.html for the root URL
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-app.get('/movie/:id', async (req, res) => {
-    try {
-        const movie = await moviedb.movieInfo({ id: req.params.id });
-        res.json(movie);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
 });
 
 app.get('/search', async (req, res) => {
