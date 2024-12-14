@@ -1,6 +1,6 @@
 $(document).ready( () => {
     $('#login').on('submit', async (event) => {
-        event.preventDefault();
+        event.preventDefault(); //stops the form from submitting and breaking out of the function early
         const data = {
             username: $('#username').val(),
             password: $('#password').val()
@@ -14,11 +14,9 @@ $(document).ready( () => {
             });
 
             const result = await response.json();
-            console.log(result);
 
             if (result.success) {
-                console.log(response);
-                window.location.href = `userpage.html`; // Redirect to the user page, for example
+                window.location.href = `userpage.html`; // Redirect to the user page on successful login
             } else {
                 console.log(result.message);
             }
