@@ -4,11 +4,13 @@ const path = require('path');
 const MovieDb = require('moviedb-promise').MovieDb;         //A MovieDB library
 const cors = require('cors');   // CORS so we can run the server and site locally
 const mysql = require('mysql2/promise');               // MYSQL
+const bodyParser = require('body-parser');                  //login form
 
-// Load environment variables from .env file
+// Load .env
 dotenv.config();
 
 const app = express();
+
 const port = process.env.PORT || 3000;
 const moviedb = new MovieDb(process.env.TMDB_API_KEY);
 
@@ -87,11 +89,34 @@ async function addMovieToPlaylist(user_id, playlistID, movieID) {
     }
 }
 
-// Enable CORS
+// Enable CORS and parser
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'userpage.html'));
+});
+
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+    console.log(req);
+    console.log(username + ' ' + password);
+    try {
+        const query = `SELECT * FROM users WHERE username = ? AND password = SHA1(?)`;
+        const [rows] = await pool.query(query, [username, password]);
+        console.log(rows);
+
+        if (rows.length > 0) {
+            res.send({ success: true, message: 'Login successful!' });
+        } else {
+            res.send({ success: false, message: 'Invalid username or password.' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ success: false, message: 'Server error. Please try again later.' });
+    }
 });
 
 app.get('/search', async (req, res) => {

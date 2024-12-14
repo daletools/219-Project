@@ -1,0 +1,26 @@
+Homepage/Login Screen
+	-keeping it simple, just logo, background, login prompt, and registration link
+
+	leads to: account creation via registration link
+		  user mainpage via successful login
+
+Account Creation
+	-doesnt need many fields, maybe just username, password, password confirmation?
+	-can set rules for password with pattern html property
+
+User Mainpage
+	-top menu bar for all logged in pages?
+		-links for home, search, log out, etc?
+	-search box
+		-search link takes you to the main search page with advanced search options
+		-maybe just the simple search on the user page to keep it clean?
+	-watchlists
+	-favorites?
+	--maybe these can have individual scrollbars
+
+Search
+	-search box top middle
+	-some checkbox/dropdown items like streaming service, rating, genre
+	-multiple item selection for each category? (sci fi AND action, etc)
+	-found items appear below search form as summary blocks
+		-name, poster, description, rating?, favorite, add to watchlist
