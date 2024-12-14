@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+  <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="login-page" style="background: url('res/moviescreen.jpg') no-repeat center center fixed; background-size: cover;">
+ <div class="screen-container">
+   <h1 class="screen-title">Welcome to Movietopia!</h1>
+  <div class="login-box">
+    <div class="form-container">
+      <form method="post" action="homepage.html"> <!--whatever homepage we have-->
+        <fieldset>
+        <legend><h3>Login</h3></legend>
+            <p>
+                <!--<strong>Username:</strong><br>-->
+                <div class="input-container">
+            <i class="fas fa-user"></i>
+            <input type="text" name="username" placeholder="Username" required title="Please enter your username"></div></p>
+        <p>
+            <!--<strong>Password:</strong><br>-->
+            <div class="input-container">
+            <i class="fas fa-lock"></i>
+            <input type="text" name="password" placeholder="Password" required title="Please enter your password"></div></p>
+          <p><input type="submit" name="submit" value="Login" class="login-button"/></p>
+        </fieldset>
+      </form>
+        <p><a href="signup.html" class="signup-link">Sign Up Here</a></p> <!-- Whatever sign up page we have -->
+  </div>
+</div>
+ </div>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+</body>
+</html>
