@@ -5,6 +5,7 @@
     "expres": "^0.0.5",
     "express": "^4.21.1",
     "moviedb-promise": "^4.0.7",
+    "mysql2": "^3.11.5",
     "path": "^0.12.7"
   }
 }
