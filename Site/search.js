@@ -31,8 +31,7 @@ $(document).ready( () => {
                         body: JSON.stringify(data)
                     });
                     const movies = await response.json();
-
-
+                    await displayMovies(movies);
                 } catch (error) {
                     console.log(error);
                 }
