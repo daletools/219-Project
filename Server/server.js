@@ -52,8 +52,15 @@ async function getPlaylistMovies(playlistName, userID) {
 }
 
 async function createUser(username, password) {
-    const query = `INSERT INTO users VALUES(null, ?, SHA1(?))`
-    await pool.query(query, [username, password]);
+    const check = `SELECT * FROM users WHERE user = ?`;
+    const [checkRows] = await pool.query(check, username);
+    if (checkRows.length === 0) {
+        const query = `INSERT INTO users VALUES(null, ?, SHA1(?))`
+        await pool.query(query, [username, password]);
+        resolve();
+    } else {
+        reject("Another user already exists with that name.");
+    }
 }
 
 async function createPlaylist(user_id, playlistName) {
@@ -119,27 +126,59 @@ app.post('/login', async (req, res) => {
     }
 });
 
-app.get('/search', async (req, res) => {
+app.post('/search', async (req, res) => {
     try {
-        const response = await moviedb.searchMovie({ query: req.query.q });
+        const { query } = req.body;
+        const response = await moviedb.searchMovie({ query });
         res.json(response.results);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-async function startServer() {
-    // const userID = await getUserID('admin');
-    //
-    // const playlists = await getUserPlaylists(userID);
-    // console.log(playlists);
-    // await addMovieToPlaylist(1, playlists[0].id, 550);
-    //
-    // const movies = await getPlaylistMovies(playlists[0].name, userID);
-    // console.log(movies);
-    // const get = await moviedb.movieInfo({id: movies[0].movie_id});
-    // console.log(get);
+app.post('/discover', async (req, res) => {
+    try {
+        const { genres, providers } = req.body;
+        const response = await moviedb.discoverMovie({
+            with_genres: genres.join(','),
+            watch_region: 'CA',
+            with_watch_providers: providers.join('|'),
+            sort_by: 'popularity.desc'
+        });
+        res.json(response.results);
+    } catch (error) {
+        console.log(error);
+    }
+})
 
+app.post('/filteredSearch', async (req, res) => {
+    try {
+        const { genres, providers, query } = req.body;
+
+
+
+        let filteredResults = [];
+        console.log(movies);
+        // for (let movie in movies) {
+        //     let genreMatch = true;
+        //     for (let genre in data.genres) {
+        //         if (!movie.genre_ids.includes(genre)) {
+        //             genreMatch = false;
+        //         }
+        //     }
+        //     if (!genreMatch) continue;
+        //
+        //     for (let id in movie.id) {
+        //         const
+        //             }
+        // }
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+
+async function startServer() {
     app.listen(port, () => {
         console.log(`Server running at http://localhost:${port}`);
     });
