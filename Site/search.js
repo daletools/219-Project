@@ -56,37 +56,79 @@ $(document).ready( () => {
 });
 
 async function displayMovies(movies) {
-    const moviesDiv = document.getElementById('movies');
-    moviesDiv.innerHTML = '';
+    const $moviesDiv = $('#movies');
+    $moviesDiv.empty();
 
     if (movies.length === 0) {
-        moviesDiv.textContent = 'No movies found.';
+        $moviesDiv.text('No movies found.');
         return;
     }
 
     for (const movie of movies) {
         console.log(movie);
-        const block = await movieBlock(movie);
-        moviesDiv.appendChild(block);
+        const $block = await movieBlock(movie);
+        $moviesDiv.append($block);
     }
 }
 
 async function movieBlock(movie) {
-    const block = document.createElement('div');
-    block.className = "movieBlock";
-    let title = document.createElement('span');
-    title.innerText = movie.title;
+    const $block = $('<div>', { class: 'movieBlock' });
+    const $title = $('<span>').text(movie.title);
+    const poster_path = movie.poster_path;
+    const $image = $('<img>', { src: `https://image.tmdb.org/t/p/w185/${poster_path}` });
+    const $summary = $('<div>').html(movie.overview);
+    const $faveButton = $('<button>').text('Fav');
+    const $addToPlaylistButton = $('<button>').text('Add');
 
-    let poster_path = movie.poster_path;
-    let image = document.createElement('img');
+    const $buttons = $('<div>', { class: 'buttons' }).append($faveButton, $addToPlaylistButton);
+    const $details = $('<div>', { class: 'details' }).append($summary, $buttons);
+    $block.append($title, $image, $details);
 
-    image.src = `https://image.tmdb.org/t/p/w185/${poster_path}`;
+    $faveButton.on('click', async (event) => {
+        const data = {
+            movieID: movie.id,
+            username: window.sessionStorage.getItem("user")
+        };
 
-    let overview = movie.overview;
-    let summary = document.createElement('div');
-    summary.innerHTML = overview;
+        console.log(data);
 
-    block.append(title, image, summary);
+        //if (!data.user) return;
+        //DEBUG TESTING
+        data.username = 'admin';
 
-    return block;
+        try {
+            const response = await fetch('http://localhost:3000/addToFavorites', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+        } catch (error) {
+            console.log(error);
+        }
+
+    });
+
+    $addToPlaylistButton.on('click', async (event) => {
+        const data = {
+            movieID: movie.id,
+            username: window.sessionStorage.getItem("user"),
+            playlistName: 'newList'
+        };
+
+        //if (!data.user) return;
+        //DEBUG TESTING
+        data.username = 'admin';
+
+        try {
+            const response = await fetch('http://localhost:3000/addToPlaylist', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
+    return $block;
 }
