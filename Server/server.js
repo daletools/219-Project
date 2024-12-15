@@ -4,7 +4,7 @@ const path = require('path');
 const MovieDb = require('moviedb-promise').MovieDb;         //A MovieDB library
 const cors = require('cors');   // CORS so we can run the server and site locally
 const mysql = require('mysql2/promise');               // MYSQL
-const bodyParser = require('body-parser');                  //login form
+const bodyParser = require('body-parser');          //login form
 
 // Load .env
 dotenv.config();
@@ -74,7 +74,17 @@ async function createPlaylist(user_id, playlistName) {
     }
 }
 
-async function createPlayListFromUser(username, playlistName) {
+async function getPlaylistID(user_id, playlistName) {
+    const check = `SELECT * FROM playlists WHERE user_id = ? AND name = ?`;
+    const [rows] = await pool.query(check, [user_id, playlistName]);
+    if (rows.length === 0) {
+        return null;
+    } else {
+        return rows[0].id;
+    }
+}
+
+async function createPlaylistFromUser(username, playlistName) {
     const id = await getUserID(username);
     if (id) {
         await createPlaylist(id, playlistName);
@@ -93,6 +103,13 @@ async function addMovieToPlaylist(user_id, playlistID, movieID) {
         } catch (e) {
             console.log(e);
         }
+    }
+}
+
+async function addMovieToPlaylistFromUser(username, playlistID, movieID) {
+    const id = await getUserID(username);
+    if (id) {
+        await addMovieToPlaylist(id, playlistID, movieID);
     }
 }
 
@@ -189,6 +206,33 @@ app.post('/filteredSearch', async (req, res) => {
     }
 })
 
+app.post('/addToFavorites', async (req, res) => {
+    try {
+
+        const { movieID, username } = req.body;
+        const id = await getUserID(username);
+        await createPlaylist(id, 'favorites');
+        const playlistID = await getPlaylistID(id, 'favorites');
+        await addMovieToPlaylist(id, playlistID, movieID);
+
+    } catch (e) {
+
+    }
+})
+
+app.post('/addToPlaylist', async (req, res) => {
+    try {
+
+        const { movieID, username, playlistName } = req.body;
+        const id = await getUserID(username);
+        await createPlaylist(id, playlistName);
+        const playlistID = await getPlaylistID(id, playlistName);
+        await addMovieToPlaylist(id, playlistID, movieID);
+
+    } catch (e) {
+
+    }
+})
 
 async function startServer() {
     app.listen(port, () => {

@@ -31,3 +31,59 @@ body {
     margin-left: 10px;
 }
 
+.movieBlock {
+    display: flex;
+    flex-direction: row; /* Keep horizontal layout */
+    align-items: flex-start; /* Align items to the top */
+    justify-content: flex-start;
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.movieBlock span {
+    display: flex;
+    align-items: center;   /* Vertically center */
+    justify-content: center; /* Horizontally center */
+    height: auto;  /* Adjust the height to content */
+    width: auto;   /* Adjust the width to content */
+    font-size: 1.2em;
+    min-width: 25%; /* Ensure it doesn't shrink below 25% */
+    background-size: contain; /* Adjust image size to fit */
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 5px;  /* Optional padding to make it less cramped */
+}
+
+.movieBlock img {
+    width: 150px;
+    margin-right: 20px;
+}
+
+.movieBlock .details {
+    display: flex;
+    flex-direction: column; /* Stack summary and buttons vertically */
+    flex: 2;
+    font-size: 0.9em;
+}
+
+.movieBlock .details button {
+    width: 60px;  /* Fixed width */
+    height: 60px; /* Fixed height */
+    margin-right: 10px; /* Space between buttons */
+    padding: 0;
+    font-size: 14px;
+    text-align: center;
+    display: inline-block;
+}
+
+.movieBlock .details .buttons {
+    display: flex;
+    justify-content: center;  /* Horizontally center the buttons */
+    align-items: center;      /* Vertically center the buttons */
+    gap: 10px;                /* Add space between buttons */
+    margin-top: 10px;
+}
