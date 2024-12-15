@@ -5,6 +5,51 @@
     <title>Search</title>
   </head>
   <body>
+    <div id="navbar"></div>
+    <div class="searchBox" id="searchBox">
+      <input type="text" id="search" placeholder="Search for a movie">
+      <input type="button" id="searchButton" value="Search">
+      <br>
+      <label for="genres">Select Genres:</label>
+      <select id="genres" name="genres" multiple size="3">
+        <option value="">-None Selected-</option>
+        <option value="28">Action</option>
+        <option value="12">Adventure</option>
+        <option value="16">Animation</option>
+        <option value="35">Comedy</option>
+        <option value="80">Crime</option>
+        <option value="99">Documentary</option>
+        <option value="18">Drama</option>
+        <option value="10751">Family</option>
+        <option value="14">Fantasy</option>
+        <option value="36">History</option>
+        <option value="27">Horror</option>
+        <option value="10402">Music</option>
+        <option value="9648">Mystery</option>
+        <option value="10749">Romance</option>
+        <option value="878">Science Fiction</option>
+        <option value="10770">TV Movie</option>
+        <option value="53">Thriller</option>
+        <option value="10752">War</option>
+        <option value="37">Western</option>
+      </select>
 
+      <label for="providers">Select Streaming Services:</label>
+      <Select id="providers" name="providers" multiple size="3">
+        <!-- remember to set watch region to CA -->
+        <!-- also add attribution thank you to JustWatch -->
+        <option value="">-None Selected-</option>
+        <option value="2">Apple TV</option>
+        <option value="8">Netflix</option>
+        <option value="9">Amazon Prime Video</option>
+        <option value="337">Disney Plus</option>
+        <option value="230">Crave</option>
+        <option value="73">Tubi</option>
+        <option value="99">Shudder</option>
+      </Select>
+    </div>
+    <div id="movies"></div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="search.js"></script>
   </body>
 </html>

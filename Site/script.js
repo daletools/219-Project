@@ -47,7 +47,6 @@ async function movieBlock(movie, container) {
     let summary = document.createElement('div');
     summary.innerHTML = overview;
 
-
     block.append(title, image, summary);
 
     container.appendChild(block);
