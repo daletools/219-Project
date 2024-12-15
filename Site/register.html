@@ -3,8 +3,28 @@
   <head>
     <meta charset="UTF-8">
     <title>Account Registration</title>
+    <link rel="stylesheet" href="styles.css">
   </head>
-  <body>
-
+  <body class="registration">
+  <div class="signup-container">
+    <form id="signupForm" method="post" action="javascript:void(0);">
+      <fieldset class="signupFields">
+        <p><strong>Please choose a username:</strong><br>
+        <input type="text" name="username" required/></p>
+        <p><strong>Please choose a password:</strong><br>
+          <input type="password" name="password" required/></p>
+          <!-- if we want <input type="password" name="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Password must be at least 8 characters long and include at least one number, one uppercase letter, and one lowercase letter."/></p>-->
+        <div class="submit-container">
+        <input type="submit" name="submit" value="Create Account"/>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', function () {
+      alert("Account created successfully!");
+      window.location.href = "login.html";
+    });
+  </script>
   </body>
 </html>
