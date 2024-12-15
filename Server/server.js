@@ -154,24 +154,36 @@ app.post('/discover', async (req, res) => {
 app.post('/filteredSearch', async (req, res) => {
     try {
         const { genres, providers, query } = req.body;
-
-
+        const search = await moviedb.searchMovie({ query });
 
         let filteredResults = [];
-        console.log(movies);
-        // for (let movie in movies) {
-        //     let genreMatch = true;
-        //     for (let genre in data.genres) {
-        //         if (!movie.genre_ids.includes(genre)) {
-        //             genreMatch = false;
-        //         }
-        //     }
-        //     if (!genreMatch) continue;
-        //
-        //     for (let id in movie.id) {
-        //         const
-        //             }
-        // }
+        for (let movie of search.results) {
+            let genreMatch = true;
+            let providerMatch = false;
+
+            for (let genre of genres) {
+                if (!movie.genre_ids.includes(Number(genre))) {
+                    genreMatch = false;
+                }
+            }
+            if (!genreMatch) continue;
+
+            const idProviders = await moviedb.movieWatchProviders(movie.id);
+            if (idProviders.results.CA?.flatrate) {
+                for (let check of idProviders.results.CA?.flatrate) {
+                    console.log(check.provider_id);
+                    if (providers.includes(check.provider_id.toString())) {
+                        providerMatch = true;
+                    }
+                }
+            }
+            if (!providerMatch) continue;
+
+            filteredResults.push(movie);
+        }
+
+        res.json(filteredResults);
+
     } catch (error) {
         console.log(error);
     }
