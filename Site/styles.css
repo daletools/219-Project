@@ -8,12 +8,21 @@ body.login-page {
     margin: 0;
     overflow: hidden;
 }
+i.fa-user, i.fa-lock {
+    font-size: 25px;
+    padding-right: 10px;
+}
 
 input:invalid {
     border: 2px solid #a92c2d;
 }
 
-input:focus:invalid {
+input#username:focus:invalid {
+    outline: none;
+    box-shadow: 0 0 5px #a92c2d;
+}
+
+input#password:focus:invalid {
     outline: none;
     box-shadow: 0 0 5px #a92c2d;
 }
@@ -32,9 +41,15 @@ input:focus:invalid {
     font-family: Cinzel, sans-serif;
     font-size: 1.8em;
     color: #ffd700;
+    padding-top: 20px;
     margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
+
+fieldset.loginFields {
+    border: none;
+}
+
 .login-box {
     <!--position: absolute;-->
     <!--top: 30%;-->
@@ -60,7 +75,7 @@ input:focus:invalid {
     margin-bottom: 15px;
 }
 
-input[type="text"], input[type="password"] {
+.form-container input[type="text"], .form-container input[type="password"] {
     width: 80%;
     padding: 10px;
     border: none;
@@ -72,11 +87,16 @@ input[type="text"], input[type="password"] {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-input[type="submit"] {
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+.form-container input[type="submit"] {
+    box-shadow: 0 5px 20px 5px rgba(169, 44, 45, 0.5);
     border-radius: 5px;
+    font-size: 14px;
+    padding: 10px;
+    border: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
-input[type="submit"]:hover {
+.form-container input[type="submit"]:hover {
     background: #ffc107;
 }
 
@@ -137,7 +157,7 @@ form #signupForm {
     width: 100%;
 }
 
-form input[type="text"], form input[type="password"] {
+form#signupForm input[type="text"], form#signupForm input[type="password"] {
     width: 100%;
     margin: 10px auto;
     padding: 5px;
@@ -152,7 +172,7 @@ form .submit-container {
     width: 100%;
 }
 
-form input[type="submit"] {
+form#signupForm input[type="submit"] {
     width: auto;
     padding: 10px 20px;
     border: none;
@@ -162,3 +182,4 @@ form input[type="submit"] {
 fieldset.signupFields {
     border: none;
 }
+
