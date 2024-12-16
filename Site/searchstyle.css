@@ -4,32 +4,54 @@ body {
     display: flex;
 }
 
-.searchBox {
-    align-items: center;
-    height: 100%;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 16px;
+#searchBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     width: 100%;
-    margin-left: 30px;
-    margin-right: 30px;
+    height: fit-content;
+    margin: 20px 0;
+    background-color: rgba(255,255,255,0.5);
+    padding: 10px;
 }
 
-#search, #searchButton {
+#searchBox > div {
+    display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-top: 15px;
+    margin-right: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+select {
+    width: 200px;
+    padding: 8px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+select[multiple] {
+    height: auto;
+    min-height: 100px;
+}
+
+#searchBox input[type="text"] {
+    padding: 10px;
+    font-size: 1em;
     margin-bottom: 10px;
 }
 
-#genres, #providers {
-    flex-direction: row;
-    align-items: center;
-    text-align: center;
-    margin-right: 10px;
-    margin-left: 10px;
+#searchBox input[type="button"] {
+    padding: 10px 15px;
+    font-size: 1em;
 }
+
+
 
 .movieBlock {
     display: flex;
@@ -46,16 +68,17 @@ body {
 
 .movieBlock span {
     display: flex;
-    align-items: center;   /* Vertically center */
-    justify-content: center; /* Horizontally center */
-    height: auto;  /* Adjust the height to content */
-    width: auto;   /* Adjust the width to content */
+    align-items: center;
+    justify-content: center;
+    height: auto;
     font-size: 1.2em;
-    min-width: 25%; /* Ensure it doesn't shrink below 25% */
-    background-size: contain; /* Adjust image size to fit */
+    width: 25%;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 5px;  /* Optional padding to make it less cramped */
+    padding: 5px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .movieBlock img {
@@ -65,15 +88,15 @@ body {
 
 .movieBlock .details {
     display: flex;
-    flex-direction: column; /* Stack summary and buttons vertically */
+    flex-direction: column;
     flex: 2;
     font-size: 0.9em;
 }
 
 .movieBlock .details button {
-    width: 60px;  /* Fixed width */
-    height: 60px; /* Fixed height */
-    margin-right: 10px; /* Space between buttons */
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
     padding: 0;
     font-size: 14px;
     text-align: center;
@@ -82,9 +105,9 @@ body {
 
 .movieBlock .details .buttons {
     display: flex;
-    justify-content: center;  /* Horizontally center the buttons */
-    align-items: center;      /* Vertically center the buttons */
-    gap: 10px;                /* Add space between buttons */
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
     margin-top: 10px;
 }
 
