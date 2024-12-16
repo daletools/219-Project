@@ -113,6 +113,16 @@ async function addMovieToPlaylistFromUser(username, playlistID, movieID) {
     }
 }
 
+async function removeFromPlaylist(user_id, playlistID, movieID) {
+    const query = `DELETE FROM playlist_movies WHERE playlist_id = ? AND movie_id = ?`;
+    try {
+        const remove = await pool.query(query, [playlistID, movieID]);
+        console.log(remove);
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 // Enable CORS and parser
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -239,8 +249,11 @@ app.post('/removeFromFavorites', async (req, res) => {
         const { movieID, username } = req.body;
         const id = await getUserID(username);
 
-        //check if user has favorites
-        //attempt to remove row
+        const playlistID = await getPlaylistID(id, 'favorites');
+
+        if (playlistID !== null) {
+            await removeFromPlaylist(id, playlistID, movieID);
+        }
 
 
     } catch (e) {
@@ -253,8 +266,10 @@ app.post('/removeFromPlaylist', async (req, res) => {
     const { movieID, username, playlistName } = req.body;
     const id = await getUserID(username);
     const playlistID = await getPlaylistID(id, playlistName);
+    if (playlistID !== null) {
+        await removeFromPlaylist(id, playlistID, movieID);
+    }
 
-    //attempt to remove from playlist
 })
 
 app.post('/isFavorite', async (req, res) => {
