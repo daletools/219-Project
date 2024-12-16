@@ -24,7 +24,7 @@ const pool = mysql.createPool({
 
 async function getUsers() {
     const [rows] = await pool.query(`SELECT * FROM users`);
-    console.log(rows);
+    return rows;
 }
 
 async function getUserID(username) {
@@ -52,12 +52,12 @@ async function getPlaylistMovies(playlistName, userID) {
 }
 
 async function createUser(username, password) {
-    const check = `SELECT * FROM users WHERE user = ?`;
+    const check = `SELECT * FROM users WHERE username = ?`;
     const [checkRows] = await pool.query(check, username);
     if (checkRows.length === 0) {
         const query = `INSERT INTO users VALUES(null, ?, SHA1(?))`
-        await pool.query(query, [username, password]);
-        resolve();
+        const [insert] = await pool.query(query, [username, password]);
+        return insert;
     } else {
         reject("Another user already exists with that name.");
     }
@@ -99,7 +99,12 @@ async function addMovieToPlaylist(user_id, playlistID, movieID) {
     if (check.length > 0) {
         const insert = `INSERT INTO playlist_movies (playlist_id, movie_id) VALUES(?, ?)`;
         try {
-            await pool.query(insert, [playlistID, movieID]);
+            const add = await pool.query(insert, [playlistID, movieID]);
+            if (add[0].affectedRows > 0) {
+                return { success: true };
+            } else {
+                return { success: false };
+            }
         } catch (e) {
             console.log(e);
         }
@@ -118,6 +123,12 @@ async function removeFromPlaylist(user_id, playlistID, movieID) {
     try {
         const remove = await pool.query(query, [playlistID, movieID]);
         console.log(remove);
+
+        if (remove[0].affectedRows > 0) {
+            return { success: true };
+        } else {
+            return { success: false };
+        }
     } catch (e) {
         console.log(e);
     }
@@ -198,7 +209,6 @@ app.post('/filteredSearch', async (req, res) => {
             const idProviders = await moviedb.movieWatchProviders(movie.id);
             if (idProviders.results.CA?.flatrate) {
                 for (let check of idProviders.results.CA?.flatrate) {
-                    console.log(check.provider_id);
                     if (providers.includes(check.provider_id.toString())) {
                         providerMatch = true;
                     }
@@ -223,8 +233,12 @@ app.post('/addToFavorites', async (req, res) => {
         const id = await getUserID(username);
         await createPlaylist(id, 'favorites');
         const playlistID = await getPlaylistID(id, 'favorites');
-        await addMovieToPlaylist(id, playlistID, movieID);
-
+        const result = await addMovieToPlaylist(id, playlistID, movieID);
+        if (result.success) {
+            res.json({ success: true });
+        } else {
+            res.status(400).json({ success: false, message: result.message });
+        }
     } catch (e) {
 
     }
@@ -252,15 +266,20 @@ app.post('/removeFromFavorites', async (req, res) => {
         const playlistID = await getPlaylistID(id, 'favorites');
 
         if (playlistID !== null) {
-            await removeFromPlaylist(id, playlistID, movieID);
+            const result = await removeFromPlaylist(id, playlistID, movieID);
+            if (result.success) {
+                res.json({ success: true });
+            } else {
+                res.status(400).json({ success: false, message: result.message });
+            }
+        } else {
+            res.status(404).json({ success: false, message: 'Favorites playlist not found' });
         }
-
-
     } catch (e) {
-        console.log(e);
+        console.error(e);
+        res.status(500).json({ success: false, message: 'An error occurred' });
     }
-
-})
+});
 
 app.post('/removeFromPlaylist', async (req, res) => {
     const { movieID, username, playlistName } = req.body;
