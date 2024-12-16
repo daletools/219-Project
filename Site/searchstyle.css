@@ -91,3 +91,21 @@ body {
 .favorite {
     color: green;
 }
+
+.title-bar {
+    background-color: #a92c2d;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1030;
+    font-size: 1.5rem;
+    padding: 10px 0;
+    font-family: Cinzel, sans-serif;
+    color: #ffd700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.navbar {
+    height: 60px;
+    margin-top: 50px;
+}

@@ -1,0 +1,69 @@
+body {
+    padding-top: 75px;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.title-bar {
+    background-color: #a92c2d;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1030;
+    font-size: 1.5rem;
+    padding: 10px 0;
+    font-family: Cinzel, sans-serif;
+    color: #ffd700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.navbar {
+    height: 60px;
+    margin-top: 50px;
+}
+
+.layout-container {
+    display: flex;
+    height: 100vh;
+}
+
+.profile-container {
+    flex: 0 0 20%;
+    background-color: #a92c2d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 2px solid #ddd;
+}
+
+.profile h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.content-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.fav-container, .watch-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fav-container {
+    background-color: #a92c2d;
+    border-bottom: 2px solid #ddd;
+}
+
+.watch-container {
+    background-color: #a92c2d;
+}
+
+.favs h1, .towatch h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
