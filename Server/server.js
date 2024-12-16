@@ -234,6 +234,47 @@ app.post('/addToPlaylist', async (req, res) => {
     }
 })
 
+app.post('/removeFromFavorites', async (req, res) => {
+    try {
+        const { movieID, username } = req.body;
+        const id = await getUserID(username);
+
+        //check if user has favorites
+        //attempt to remove row
+
+
+    } catch (e) {
+        console.log(e);
+    }
+
+})
+
+app.post('/removeFromPlaylist', async (req, res) => {
+    const { movieID, username, playlistName } = req.body;
+    const id = await getUserID(username);
+    const playlistID = await getPlaylistID(id, playlistName);
+
+    //attempt to remove from playlist
+})
+
+app.post('/isFavorite', async (req, res) => {
+    try {
+        const { movieID, username } = req.body;
+        const userID = await getUserID(username);
+        const faves = await getPlaylistMovies('favorites', userID);
+
+        for (const movie of faves) {
+            if (movie.movie_id === movieID) {
+                return res.json({ isFavorite: true }); // Return after response
+            }
+        }
+
+        return res.json({ isFavorite: false });
+    } catch (e) {
+        res.status(500).json({ e });
+    }
+});
+
 async function startServer() {
     app.listen(port, () => {
         console.log(`Server running at http://localhost:${port}`);

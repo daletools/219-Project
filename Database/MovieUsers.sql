@@ -36,6 +36,7 @@ CREATE TABLE `playlist_movies` (
 
 LOCK TABLES `playlist_movies` WRITE;
 /*!40000 ALTER TABLE `playlist_movies` DISABLE KEYS */;
+INSERT INTO `playlist_movies` VALUES (1,550),(3,1366),(3,933260),(4,36685);
 /*!40000 ALTER TABLE `playlist_movies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,7 +54,7 @@ CREATE TABLE `playlists` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `playlists_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,6 +63,7 @@ CREATE TABLE `playlists` (
 
 LOCK TABLES `playlists` WRITE;
 /*!40000 ALTER TABLE `playlists` DISABLE KEYS */;
+INSERT INTO `playlists` VALUES (1,'My Playlist',1),(2,'testList',1),(3,'favorites',1),(4,'newList',1);
 /*!40000 ALTER TABLE `playlists` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,7 +80,7 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -87,7 +89,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'admin','b7a875fc1ea228b9061041b7cec4bd3c52ab3ce3'),(2,'test','f3bbbd66a63d4bf1747940578ec3d0103530e21d');
+INSERT INTO `users` VALUES (1,'admin','b7a875fc1ea228b9061041b7cec4bd3c52ab3ce3'),(2,'test','f3bbbd66a63d4bf1747940578ec3d0103530e21d'),(3,'creationTest','b7a875fc1ea228b9061041b7cec4bd3c52ab3ce3');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -100,4 +102,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-13 14:46:41
+-- Dump completed on 2024-12-15 21:10:55
