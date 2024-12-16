@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Search</title>
-    <link rel="stylesheet" href="searchstyle.css">
-  </head>
-  <body>
-    <div id="navbar"></div>
-    <div class="searchBox" id="searchBox">
-      <input type="text" id="search" placeholder="Search for a movie">
-      <input type="button" id="searchButton" value="Search">
-      <br>
-
+<head>
+  <meta charset="UTF-8">
+  <title>Search</title>
+  <link rel="stylesheet" href="searchstyle.css">
+</head>
+<body>
+<div class="title-bar text-center fw-bold py-2">
+  MOVIETOPIA
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <div class="container-fluid align-items-center">
+    <a class="nav-link text-dark fw-bold text-center" href="profile.html" style="flex: 1;">My Profile</a>
+    <a class="nav-link text-dark fw-bold text-center" href="search.html" style="flex: 1;">Search</a>
+    <a class="nav-link text-dark fw-bold text-center" href="login.html" style="flex: 1;">Logout</a>
+  </div>
+</nav>
       <div>
         <label for="genres">Select Genres:</label>
         <select id="genres" name="genres" multiple size="3">
