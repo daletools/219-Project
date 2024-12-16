@@ -65,7 +65,6 @@ async function displayMovies(movies) {
     }
 
     for (const movie of movies) {
-        console.log(movie);
         const $block = await movieBlock(movie);
         $moviesDiv.append($block);
     }
@@ -84,6 +83,42 @@ async function movieBlock(movie) {
     const $details = $('<div>', { class: 'details' }).append($summary, $buttons);
     $block.append($title, $image, $details);
 
+    try {
+        const data = {
+            movieID: movie.id,
+            username: window.sessionStorage.getItem("user")
+        };
+
+        //if (!data.user) return;
+        //DEBUG TESTING
+        data.username = 'admin';
+
+        const response = await fetch('http://localhost:3000/isFavorite', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        console.log("Server response:", response);
+
+        if (response.ok) {
+            const isFavorite = await response.json();
+            console.log(isFavorite);
+            if (isFavorite.isFavorite) {
+                console.log('isfavorite');
+                $faveButton.addClass('favorite');
+            } else {
+                console.log('is not');
+                $faveButton.removeClass('favorite');
+            }
+        } else {
+            console.log("Error:", await response.json());
+            $faveButton.removeClass('favorite'); // Default state on failure
+        }
+    } catch (e) {
+        console.log(e);
+    }
+
     $faveButton.on('click', async (event) => {
         const data = {
             movieID: movie.id,
@@ -96,16 +131,27 @@ async function movieBlock(movie) {
         //DEBUG TESTING
         data.username = 'admin';
 
-        try {
-            const response = await fetch('http://localhost:3000/addToFavorites', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-        } catch (error) {
-            console.log(error);
+        if ($faveButton.hasClass('favorite')) {
+            try {
+                const response = await fetch('http://localhost:3000/removeFromFavorites', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            try {
+                const response = await fetch('http://localhost:3000/addToFavorites', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            } catch (error) {
+                console.log(error);
+            }
         }
-
     });
 
     $addToPlaylistButton.on('click', async (event) => {
