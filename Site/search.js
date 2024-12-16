@@ -99,21 +99,16 @@ async function movieBlock(movie) {
             body: JSON.stringify(data)
         });
 
-        console.log("Server response:", response);
-
         if (response.ok) {
             const isFavorite = await response.json();
-            console.log(isFavorite);
             if (isFavorite.isFavorite) {
-                console.log('isfavorite');
                 $faveButton.addClass('favorite');
             } else {
-                console.log('is not');
                 $faveButton.removeClass('favorite');
             }
         } else {
             console.log("Error:", await response.json());
-            $faveButton.removeClass('favorite'); // Default state on failure
+            $faveButton.removeClass('favorite');
         }
     } catch (e) {
         console.log(e);
@@ -124,8 +119,6 @@ async function movieBlock(movie) {
             movieID: movie.id,
             username: window.sessionStorage.getItem("user")
         };
-
-        console.log(data);
 
         //if (!data.user) return;
         //DEBUG TESTING
@@ -138,6 +131,10 @@ async function movieBlock(movie) {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 })
+                console.log(response);
+                if (response.ok) {
+                    $faveButton.removeClass('favorite');
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -148,6 +145,9 @@ async function movieBlock(movie) {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
+                if (response.ok) {
+                    $faveButton.addClass('favorite');
+                }
             } catch (error) {
                 console.log(error);
             }
