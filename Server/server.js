@@ -45,8 +45,12 @@ async function getUserPlaylists(userID) {
 }
 
 async function getPlaylistMovies(playlistName, userID) {
-    const query = `SELECT movie_id FROM playlist_movies pm, playlists p WHERE p.name = ? AND p.user_id = ?`;
-
+    const query = `
+        SELECT movie_id
+        FROM playlist_movies pm
+                 JOIN playlists p ON pm.playlist_id = p.id
+        WHERE p.name = ? AND p.user_id = ?;
+    `;
     const [rows] = await pool.query(query, [playlistName, userID]);
     return rows;
 }
@@ -347,14 +351,13 @@ app.post('/getList', async (req, res) => {
     try {
         const { username, playlistName } = req.body;
         const id = await getUserID(username);
-        const playlistID = await getPlaylistID(id, playlistName);
 
-        const movies = await getPlaylistMovies('favorites', id);
+        const movies = await getPlaylistMovies(playlistName, id);
 
-        if (movies.results.length === 0) {
+        if (movies.length === 0) {
             return res.json({ success: false });
         } else {
-            const movieIds = movies.results.map(movie => movie.id);
+            const movieIds = movies.map(movie => movie.movie_id);
             return res.json({
                 success: true,
                 movieIds: movieIds
@@ -368,8 +371,9 @@ app.post('/getList', async (req, res) => {
 
 app.post('/getMovieById', async (req, res) => {
     try {
-        const { query } = req.body;
-        const response = await moviedb.movieInfo(query);
+        const { movie } = req.body;
+        console.log(movie);
+        const response = await moviedb.movieInfo(movie);
         res.json(response);
     } catch (e) {
         console.error(e);
