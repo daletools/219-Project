@@ -2,6 +2,7 @@ body {
     background: url('res/curtains.jpg') no-repeat center center fixed;
     background-size: cover;
     display: flex;
+    padding-top: 100px;
 }
 
 #searchBox {
