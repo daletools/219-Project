@@ -181,3 +181,8 @@ fieldset.signupFields {
 .submit-container input[type="submit"]:hover {
     background: rgba(255, 193, 7, 0.5);
 }
+
+.nav-link:hover {
+    text-decoration: none;
+    text-shadow: 0 0 10px rgba(255, 99, 71, 0.7), 0 0 20px rgba(255, 99, 71, 0.5);
+}
