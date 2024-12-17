@@ -95,8 +95,8 @@ select[multiple] {
 }
 
 .movieBlock .details button {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     margin-right: 10px;
     padding: 0;
     font-size: 14px;
@@ -113,6 +113,10 @@ select[multiple] {
 }
 
 .favorite {
+    color: green;
+}
+
+.watch {
     color: green;
 }
 

@@ -246,13 +246,16 @@ app.post('/addToFavorites', async (req, res) => {
 
 app.post('/addToPlaylist', async (req, res) => {
     try {
-
-        const { movieID, username, playlistName } = req.body;
+        const { movieID, username } = req.body;
         const id = await getUserID(username);
-        await createPlaylist(id, playlistName);
-        const playlistID = await getPlaylistID(id, playlistName);
-        await addMovieToPlaylist(id, playlistID, movieID);
-
+        await createPlaylist(id, 'watchlist');
+        const playlistID = await getPlaylistID(id, 'watchlist');
+        const result = await addMovieToPlaylist(id, playlistID, movieID);
+        if (result.success) {
+            res.json({ success: true });
+        } else {
+            res.status(400).json({ success: false, message: result.message });
+        }
     } catch (e) {
 
     }
@@ -282,13 +285,26 @@ app.post('/removeFromFavorites', async (req, res) => {
 });
 
 app.post('/removeFromPlaylist', async (req, res) => {
-    const { movieID, username, playlistName } = req.body;
-    const id = await getUserID(username);
-    const playlistID = await getPlaylistID(id, playlistName);
-    if (playlistID !== null) {
-        await removeFromPlaylist(id, playlistID, movieID);
-    }
+    try {
+        const { movieID, username } = req.body;
+        const id = await getUserID(username);
 
+        const playlistID = await getPlaylistID(id, 'watchlist');
+
+        if (playlistID !== null) {
+            const result = await removeFromPlaylist(id, playlistID, movieID);
+            if (result.success) {
+                res.json({ success: true });
+            } else {
+                res.status(400).json({ success: false, message: result.message });
+            }
+        } else {
+            res.status(404).json({ success: false, message: 'Watchlist playlist not found' });
+        }
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ success: false, message: 'An error occurred' });
+    }
 })
 
 app.post('/isFavorite', async (req, res) => {
@@ -308,6 +324,24 @@ app.post('/isFavorite', async (req, res) => {
         res.status(500).json({ e });
     }
 });
+
+app.post('/isWatchlist', async (req, res) => {
+    try {
+        const { movieID, username } = req.body;
+        const userID = await getUserID(username);
+        const watches = await getPlaylistMovies('watchlist');
+
+        for (const movie of watches) {
+            if (movie.movie_id === movieID) {
+                return res.json({ isWatchlist: true });
+            }
+        }
+
+        return res.json({ isWatchlist: false });
+    } catch (e) {
+        console.error(e);
+    }
+})
 
 async function startServer() {
     app.listen(port, () => {
