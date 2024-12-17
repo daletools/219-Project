@@ -34,25 +34,41 @@ select {
     box-sizing: border-box;
     margin-bottom: 10px;
     font-size: 1em;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 select[multiple] {
     height: auto;
     min-height: 100px;
+
+}
+
+select[multiple] option:hover {
+    background-color: rgba(169, 44, 45, 0.5);
 }
 
 #searchBox input[type="text"] {
     padding: 10px;
     font-size: 1em;
     margin-bottom: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 #searchBox input[type="button"] {
+    box-shadow: 0 5px 20px 5px rgba(169, 44, 45, 0.5);
+    border-radius: 5px;
     padding: 10px 15px;
     font-size: 1em;
 }
 
+#searchBox input[type="button"]:hover {
+    background: rgba(255, 193, 7, 0.7);
+}
 
+#searchBox input[type="text"]:focus {
+    box-shadow: 0 0 5px #a92c2d;
+    outline: none;
+}
 
 .movieBlock {
     display: flex;
@@ -136,4 +152,10 @@ select[multiple] {
 .navbar {
     height: 60px;
     margin-top: 50px;
+}
+
+.nav-link:hover {
+    text-decoration: none;
+    transform: scale(1.1);
+    text-shadow: 0 0 10px rgba(255, 99, 71, 0.7), 0 0 20px rgba(255, 99, 71, 0.5);
 }
