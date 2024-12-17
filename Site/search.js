@@ -90,9 +90,6 @@ async function movieBlock(movie) {
             username: window.sessionStorage.getItem("user")
         };
 
-        //DEBUG TESTING
-        data.username = 'admin';
-
         const response = await fetch('http://localhost:3000/isFavorite', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -140,9 +137,6 @@ async function movieBlock(movie) {
             username: window.sessionStorage.getItem("user")
         };
 
-        //DEBUG TESTING
-        data.username = 'admin';
-
         try {
             if ($faveButton.hasClass('favorite')) {
                 const response = await fetch('http://localhost:3000/removeFromFavorites', {
@@ -182,9 +176,6 @@ async function movieBlock(movie) {
             username: window.sessionStorage.getItem("user"),
             playlistName: 'newList'
         };
-
-        //DEBUG TESTING
-        data.username = 'admin';
 
         try {
             if ($addToWatchlistButton.hasClass('watch')) {

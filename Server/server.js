@@ -59,11 +59,11 @@ async function createUser(username, password) {
     const check = `SELECT * FROM users WHERE username = ?`;
     const [checkRows] = await pool.query(check, username);
     if (checkRows.length === 0) {
-        const query = `INSERT INTO users VALUES(null, ?, SHA1(?))`
+        const query = `INSERT INTO users VALUES(null, ?, SHA1(?))`;
         const [insert] = await pool.query(query, [username, password]);
         return insert;
     } else {
-        reject("Another user already exists with that name.");
+        return Promise.reject("Another user already exists with that name.");
     }
 }
 
@@ -150,8 +150,7 @@ app.get('/', (req, res) => {
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    console.log(req);
-    console.log(username + ' ' + password);
+
     try {
         const query = `SELECT * FROM users WHERE username = ? AND password = SHA1(?)`;
         const [rows] = await pool.query(query, [username, password]);
@@ -165,6 +164,23 @@ app.post('/login', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send({ success: false, message: 'Server error. Please try again later.' });
+    }
+});
+
+app.post('/register', async (req, res) => {
+    const { username, password } = req.body;
+    console.log(req.body);
+    try {
+        const response = await createUser(username, password);
+
+        if (response.ok) {
+            res.status(201).send("Account created");
+        } else {
+            res.status(400).send("error");
+        }
+
+    } catch (e) {
+        res.status(400).send("error");
     }
 });
 

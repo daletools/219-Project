@@ -21,9 +21,6 @@ async function populateGallery($gallery, listName) {
         playlistName: listName
     }
 
-    //DEBUG TESTING
-    data.username = 'admin';
-
     const response = await fetch('http://localhost:3000/getList', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

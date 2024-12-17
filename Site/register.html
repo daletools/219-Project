@@ -1,31 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Account Registration</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body class="registration">
-<div class="signup-container">
-  <h2>Sign Up for a Movietopia Account</h2>
-  <form id="signupForm" method="post" action="javascript:void(0);">
-    <fieldset class="signupFields">
-      <p><strong>Please choose a username: </strong>
-        <input type="text" name="username" required/></p>
-      <p><strong>Please choose a password: </strong>
-        <input type="password" name="password" required/></p>
-      <!-- if we want <input type="password" name="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Password must be at least 8 characters long and include at least one number, one uppercase letter, and one lowercase letter."/></p>-->
-      <div class="submit-container">
-        <input type="submit" name="submit" value="Create Account"/>
-      </div>
-    </fieldset>
-  </form>
-</div>
-<script>
-  document.getElementById('signupForm').addEventListener('submit', function () {
-    alert("Account created successfully!");
-    window.location.href = "login.html";
-  });
-</script>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <title>Account Registration</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="registration">
+    <div class="signup-container">
+      <h2>Sign Up for a Movietopia Account</h2>
+      <form id="signupForm" method="post" action="javascript:void(0);">
+        <fieldset class="signupFields">
+          <p><strong>Please choose a username: </strong>
+            <input type="text" id="username" name="username" required/></p>
+          <p><strong>Please choose a password: </strong>
+            <input type="password" id="password" name="password" required/></p>
+          <!-- if we want <input type="password" name="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Password must be at least 8 characters long and include at least one number, one uppercase letter, and one lowercase letter."/></p>-->
+          <div class="submit-container">
+            <input type="submit" name="submit" value="Create Account"/>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="register.js"></script>
+  </body>
 </html>
