@@ -343,6 +343,41 @@ app.post('/isWatchlist', async (req, res) => {
     }
 })
 
+app.post('/getList', async (req, res) => {
+    try {
+        const { username, playlistName } = req.body;
+        const id = await getUserID(username);
+        const playlistID = await getPlaylistID(id, playlistName);
+
+        const movies = await getPlaylistMovies('favorites', id);
+
+        if (movies.results.length === 0) {
+            return res.json({ success: false });
+        } else {
+            const movieIds = movies.results.map(movie => movie.id);
+            return res.json({
+                success: true,
+                movieIds: movieIds
+            });
+        }
+
+    } catch (e) {
+
+    }
+})
+
+app.post('/getMovieById', async (req, res) => {
+    try {
+        const { query } = req.body;
+        const response = await moviedb.movieInfo(query);
+        res.json(response);
+    } catch (e) {
+        console.error(e);
+        res.status(404).json({ e });
+    }
+})
+
+
 async function startServer() {
     app.listen(port, () => {
         console.log(`Server running at http://localhost:${port}`);
