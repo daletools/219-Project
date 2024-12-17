@@ -17,7 +17,7 @@ $(document).ready( () => {
 
             if (result.success) {
                 window.sessionStorage.setItem("user", data.username);
-                window.location.href = `userpage.html`; // Redirect to the user page on successful login
+                window.location.href = `profile.html`; // Redirect to the user page on successful login
             } else {
                 console.log(result.message);
             }
