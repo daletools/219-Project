@@ -50,6 +50,8 @@ body {
 .profile h1 {
     font-size: 1.5rem;
     color: black;
+    width: 100%; /*added*/
+    text-align: center;
 }
 
 .content-container {
@@ -81,31 +83,59 @@ body {
 }
 
 .image-container {
-    width: 150px;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border: 3px solid #ddd;
+    /*background-color: rgba(255,255,255,0.5);*/
+    background-color: #ffd700;
+    /*background: rgba(255, 193, 7, 0.9);*/
+    margin: 15px 0;
+    border-radius: 5px;
+    /*width: 150px;
     height: 150px;
     overflow: hidden;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #ffd700;
-    margin: 5px;
+    margin: 5px;*/
 }
 
 .image-container img {
     max-width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+    /*object-fit: contain;*/
     padding: 5px;
 
 }
 
 .userdetails-container {
-    width: 150px;
+    width: 100%;
+    height: 50px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    /*background: rgba(255, 193, 7, 0.9);*/
+    background-color: #ffd700;
+    margin: 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*width: 150px;
     height: 50px;
     overflow: hidden;
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #ffd700;
-    margin: 5px;
+    margin: 5px;*/
+}
+
+.userdetails-container h5 {
+    margin: 0;
+    text-align: center;
+    color: black;
+    font-size: 1.2rem;
 }
 
 .profiletitle-container {
@@ -115,7 +145,8 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #ffd700;
-    margin: 5px;
+    /*background: rgba(255, 193, 7, 0.9);*/
+    margin-top: 20px;
 }
 
 .towatch h1 {

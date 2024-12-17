@@ -51,18 +51,9 @@ fieldset.loginFields {
 }
 
 .login-box {
-    <!--position: absolute;-->
-    <!--top: 30%;-->
-    <!--left: 50%;-->
-    <!--transform: translate(-50%, -50%);-->
-    background: rgba(0, 0, 0, 0.5);
     padding: 7px;
     border-radius: 10px;
-    <!--box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);-->
-    <!--color: #fff;-->
     width: 100%;
-    <!--max-width: 400px;-->
-    <!--text-align: center;-->
     margin: 0 auto;
 }
 
@@ -80,8 +71,6 @@ fieldset.loginFields {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    <!--font-weight: bold;-->
-    <!--transition: background 0.3s ease;-->
     outline: none;
     margin-top: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
@@ -96,8 +85,9 @@ fieldset.loginFields {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
 .form-container input[type="submit"]:hover {
-    background: #ffc107;
+    background: rgba(255, 193, 7, 0.5);
 }
 
 .input-container i {
@@ -123,28 +113,25 @@ fieldset.loginFields {
 }
 
 body.registration {
-    background: url('res/ticketstub.jpg') no-repeat center center;
+    background: url('res/ticketstub.jpg') no-repeat center center fixed;
     background-size: contain;
+    font-family: "Courier New", sans-serif;
     margin: 0;
     height: 100vh;
     overflow: hidden;
     display: flex;
-    <!--justify-content: center;-->
-    justify-content: flex-start;
     align-items: center;
     padding-left: 25%;
-
+    justify-content: flex-start;
 }
 
 .signup-container {
     padding: 10px 15px;
-    max-width: 400px;
+    max-width: 500px;
     max-height: 150px;
     text-align: center;
-    <!-- overflow: hidden; -->
     margin-left: 20px;
-    margin-bottom: 60px;
-    <!-- adding this -->
+    margin-bottom: 140px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -162,7 +149,13 @@ form#signupForm input[type="text"], form#signupForm input[type="password"] {
     margin: 10px auto;
     padding: 5px;
     border: 1px solid #ccc;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
     box-sizing: border-box;
+}
+
+form#signupForm input[type="text"]:focus, form#signupForm input[type="password"]:focus {
+    box-shadow: 0 0 5px #a92c2d;
+    outline: none;
 }
 
 form .submit-container {
@@ -176,9 +169,15 @@ form#signupForm input[type="submit"] {
     width: auto;
     padding: 10px 20px;
     border: none;
+    box-shadow: 0 5px 20px 5px rgba(169, 44, 45, 0.5);
+    border-radius: 5px;
 
 }
 
 fieldset.signupFields {
     border: none;
+}
+
+.submit-container input[type="submit"]:hover {
+    background: rgba(255, 193, 7, 0.5);
 }
