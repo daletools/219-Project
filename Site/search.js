@@ -1,5 +1,4 @@
-$(document).ready( async () => {
-    const playlists = await fetch();
+$(document).ready(
 
     $('#searchButton').on('click', async (event) => {
         const data = {
@@ -55,7 +54,7 @@ $(document).ready( async () => {
             }
         }
     })
-});
+);
 
 async function displayMovies(movies) {
     const $moviesDiv = $('#movies');
@@ -79,9 +78,9 @@ async function movieBlock(movie) {
     const $image = $('<img>', { src: `https://image.tmdb.org/t/p/w185/${poster_path}` });
     const $summary = $('<div>').html(movie.overview);
     const $faveButton = $('<button>').text('Add to Favorites');
-    const $addToPlaylistButton = $('<button>').text('Add to Playlist');
+    const $addToWatchlistButton = $('<button>').text('Add to Watchlist');
 
-    const $buttons = $('<div>', { class: 'buttons' }).append($faveButton, $addToPlaylistButton);
+    const $buttons = $('<div>', { class: 'buttons' }).append($faveButton, $addToWatchlistButton);
     const $details = $('<div>', { class: 'details' }).append($summary, $buttons);
     $block.append($title, $image, $details);
 
@@ -110,6 +109,25 @@ async function movieBlock(movie) {
         } else {
             console.log("Error:", await response.json());
             $faveButton.removeClass('favorite').text('Add to Favorites');
+        }
+
+
+
+        const watchResponse = await fetch('http://localhost:3000/isWatchlist', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        });
+
+        if (watchResponse.ok) {
+            const watch = await watchResponse.json();
+            if (watch.isWatchlist) {
+                $addToWatchlistButton.addClass('watch').text('Remove from Watchlist');
+            } else {
+                $addToWatchlistButton.removeClass('watch').text('Add to Watchlist');
+            }
+        } else {
+            $addToWatchlistButton.removeClass('watch').text('Add to Watchlist');
         }
     } catch (e) {
         console.log(e);
@@ -158,7 +176,7 @@ async function movieBlock(movie) {
     });
 
     // Handle Add to Playlist button click
-    $addToPlaylistButton.on('click', async (event) => {
+    $addToWatchlistButton.on('click', async (event) => {
         const data = {
             movieID: movie.id,
             username: window.sessionStorage.getItem("user"),
@@ -169,21 +187,33 @@ async function movieBlock(movie) {
         data.username = 'admin';
 
         try {
-            const response = await fetch('http://localhost:3000/addToPlaylist', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-
-            if (response.ok) {
-                console.log("Movie added to playlist.");
+            if ($addToWatchlistButton.hasClass('watch')) {
+                const response = await fetch('http://localhost:3000/removeFromPlaylist', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                if (response.ok) {
+                    $addToWatchlistButton.removeClass('watch').text('Add to Watchlist');
+                } else {
+                    console.log("Error removing from watchlist:", await response.json());
+                }
             } else {
-                console.log("Error adding to playlist:", await response.json());
+                const response = await fetch('http://localhost:3000/addToPlaylist', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                if (response.ok) {
+                    $addToWatchlistButton.addClass('watch').text('Remove from Watchlist');
+                } else {
+                    console.log("Error adding to watchlist:", await response.json());
+                }
             }
         } catch (error) {
-            console.log("Error during add to playlist:", error);
+            console.log("Error during watchlist button action:", error);}
         }
-    });
+    );
 
     return $block;
 }
